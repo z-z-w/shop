@@ -5,19 +5,32 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex'
+  import {mapGetters, mapMutations} from 'vuex'
   import axios from 'axios';
   import url from './assets/js/api.js'
 export default {
   name: 'App',
+  computed:{
+    ...mapGetters([
+      "selectGoods", "userInfo"
+    ])
+  },
   async created() {
     let res = await axios.get(url.isLogin)
     if (res.status === 200 && res.data.status === 0) {
-      this.login(res.data.data.username)
+      this.updateUserInfo(res.data.data)
+    }
+    if(this.userInfo._id) {
+      let res = await axios.post(url.getCart, {
+        _id: this.userInfo._id
+      })
+      if (res.data.status === 0) {
+        this.updateGoods(res.data.data)
+      }
     }
   },
   methods: {
-    ...mapMutations(["login"])
+    ...mapMutations(["updateUserInfo","updateGoods"])
   }
 }
 </script>

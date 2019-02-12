@@ -11,7 +11,7 @@
         <span>热卖</span>
       </router-link>
       <router-link class="router_link link_cart" to="/cart">
-        <span v-if="cartCount>0" class="dot">{{ cartCount }}</span>
+        <span v-if="selectGoods.length > 0" class="dot">{{ selectGoods.length }}</span>
         <i class="van-icon van-icon-cart"><!----></i>
         <span>购物车</span>
       </router-link>
@@ -30,33 +30,18 @@
 </template>
 
 <script>
-import store from '@/vuex/store'
-import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
+
 export default {
-  store,
   data() {
     return {
       active: 0,
-      cartCount:''
     }
   },
   computed:{
-  	...mapState({
-      selectGoods: state => state.selectGoods//绑定store.selectGoods到组件，之后可用this.selectGoods获取
-   })
-  },
-  mounted(){
-  	this.upDateCount()
-  },
-  methods:{
-  	//更新购物车数量
-	upDateCount(){
-	   let num = 0;
-	   this.selectGoods.forEach((item, index) => {
-	      num += item.count;
-	   });
-	   this.cartCount = String(num)
-	}
+  	...mapGetters([
+  	  "selectGoods"
+    ])
   }
 }
 </script>

@@ -5,38 +5,25 @@ Vue.use(Vuex);
 
 const state={
 	selectGoods:[],
-  isLogin: null
+  userInfo: null
 }
 
 const getters = {
-  isLogin: state => state.isLogin
+  selectGoods: state => state.selectGoods,
+  userInfo: state => state.userInfo
 }
 
 const mutations={
-	add( state , data ){
-    state.selectGoods.push( data )
+	updateGoods( state , data ){
+    state.selectGoods = data
   },
-  remove( state , data){
-    state.selectGoods.splice(data, 1);
-  },
-  login(state, data) {
-	  state.isLogin = data
+  updateUserInfo(state, data) {
+	  state.userInfo = data
   }
-}
-
-const actions={
-      addGoods( {commit} , data ){
-          commit('add',data)
-      },
-      removeGoods( {commit} , data ){
-          commit('remove',data)
-      }
-        
 }
 
 export default new Vuex.Store({
     state,
     getters,
-    mutations,
-    actions
+    mutations
 });

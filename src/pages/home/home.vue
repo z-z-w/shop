@@ -9,7 +9,7 @@
           <input type="text" class="van_search" placeholder="请输入搜索关键词" v-model="searchWord" />
         </div>
         <router-link to="/my" class="goto_login">
-          <span class="sign_in" v-if="!isLogin">登陆</span>
+          <span class="sign_in" v-if="!userInfo">登陆</span>
           <van-icon name="contact" v-else />
         </router-link>
       </div>
@@ -86,7 +86,7 @@
       WaterfallLower: Waterfall('lower')
     },
     computed: {
-      ...mapGetters(["isLogin"])
+      ...mapGetters(["userInfo"])
     },
     methods: {
       loadMore() {

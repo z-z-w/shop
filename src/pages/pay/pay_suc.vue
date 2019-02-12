@@ -12,9 +12,9 @@
 			</div>
 		</div>
 		<div class="btn">
-			<router-link to="/home">
+			<a href="/home">
 				<van-button size="normal">返回首页</van-button>
-			</router-link>
+			</a>
 		</div>
 		
 	</div>

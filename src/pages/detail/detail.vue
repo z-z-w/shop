@@ -37,7 +37,7 @@
 			<van-goods-action-mini-btn icon="chat">
 				客服
 			</van-goods-action-mini-btn>
-			<van-goods-action-mini-btn icon="cart" :info="cartCount>0?cartCount:''" @click="goCart">
+			<van-goods-action-mini-btn icon="cart" :info="selectGoods.length>0?selectGoods.length.toString():''" @click="goCart">
 				购物车
 			</van-goods-action-mini-btn>
 			<van-goods-action-big-btn primary @click="onAddcart">
@@ -80,7 +80,7 @@
 <script>
 import axios from 'axios';
 import url from '../../assets/js/api.js'
-import {mapState} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 import VueHeader from '@/components/vue-header.vue'
 import {Toast} from 'vant'
 
@@ -94,7 +94,6 @@ import {Toast} from 'vant'
 				total:'',
 				smpic:'',
 				count:1,
-				cartCount: '',
         price: 0
 			}
 		},
@@ -103,12 +102,11 @@ import {Toast} from 'vant'
     },
 		mounted(){
 			this.getDetails();
-			this.upDateCount();
 		},
 		computed:{
-			...mapState({
-          selectGoods: state => state.selectGoods//绑定store.selectGoods到组件，之后可用this.selectGoods获取
-	   })
+			...mapGetters([
+			  "selectGoods", "userInfo"
+      ])
 		},
 		methods: {
 			getDetails() {
@@ -135,49 +133,58 @@ import {Toast} from 'vant'
 				event.cancelBubble = true
 			},
 			//加入购物车
-			addToCart(){
-		    	let flag = true;
-			    let num = 0;
-			
-			    this.selectGoods.forEach((item, index) => {
-			      // 通过id值判断购物车是否已经存在商品,如果存在就不添加
-            if (this.id == item.id) {
-			        flag = false;		
-			        if(this.count != item.count){
-			        	 item.count+=this.count
-				         console.log('不等')
-				         this.isShow=!this.isShow
-				         this.upDateCount()
-			        }
-			      }
-			    });
-
-          if(flag){
-          	this.$store.dispatch( 'addGoods' , {
-	          	name: this.goods.name,
-	          	price: this.goods.price,
-	          	id: this.goods._id,
-	          	smpic: this.smpic,
-              desc: this.goods.desc,
-	          	count: this.count,
-	          	check: true
-	          })
-          	this.upDateCount()
-          	this.isShow=!this.isShow
+			async addToCart(){
+        let res = await axios.post(url.addToCart, {
+          _id: this.userInfo._id,
+          good: {
+            id: this.goods._id,
+            name: this.goods.name,
+            price: this.goods.price,
+            smpic: this.smpic,
+            desc: this.goods.desc,
+            count: this.count,
+            stock: this.goods.stock
           }
+        })
+        if (res.data.status === 0) {
+          this.updateGoods(res.data.data)
+          this.isShow=!this.isShow
+        }
+		    	// let flag = true;
+			    // let num = 0;
+          //
+			    // this.selectGoods.forEach((item, index) => {
+			    //   // 通过id值判断购物车是否已经存在商品,如果存在就不添加
+          //   if (this.id == item.id) {
+			    //     flag = false;
+			    //     if(this.count != item.count){
+			    //     	 item.count+=this.count
+				  //        console.log('不等')
+				  //        this.isShow=!this.isShow
+				  //        this.upDateCount()
+			    //     }
+			    //   }
+			    // });
+          //
+          // if(flag){
+          // 	this.$store.dispatch( 'addGoods' , {
+	        //   	name: this.goods.name,
+	        //   	price: this.goods.price,
+	        //   	id: this.goods._id,
+	        //   	smpic: this.smpic,
+          //     desc: this.goods.desc,
+	        //   	count: this.count,
+	        //   	check: true
+	        //   })
+          // }
 		  },
-      //更新购物车数量
-      upDateCount() {
-        let num = 0;
-        this.selectGoods.forEach((item, index) => {
-          num += item.count;
-        });
-        this.cartCount = String(num)
-      },
       //跳转到购物车
       goCart(){
         this.$router.push({path: '/cart'});
       },
+      ...mapMutations([
+        "updateGoods"
+      ])
 		}
 	};
 </script>

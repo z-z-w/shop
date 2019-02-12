@@ -7,7 +7,15 @@ let url = {
     signUp: '/user/sign_up',
     isLogin: '/user/isLogin',
     logout: '/user/logout',
-    search: '/user/search'
+    search: '/user/search',
+    saveAddress: '/user/save_address',
+    getAddress: '/user/get_address',
+    deleteAddress: '/user/delete_address',
+    addToCart: '/user/add_to_cart',
+    getCart: '/user/get_cart',
+    updateCart: '/user/update_cart',
+    addOrder: '/user/add_order',
+    getOrderList: '/user/get_orderList'
 }
 
 let host = '/api'
