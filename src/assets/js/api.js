@@ -15,7 +15,8 @@ let url = {
     getCart: '/user/get_cart',
     updateCart: '/user/update_cart',
     addOrder: '/user/add_order',
-    getOrderList: '/user/get_orderList'
+    getOrderList: '/user/get_orderList',
+    getOrderConfirm: '/user/get_orderConfirm'
 }
 
 let host = '/api'

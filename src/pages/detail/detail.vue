@@ -9,8 +9,8 @@
 
 		<van-cell-group>
 			<van-cell>
-				<div class="goods-title">{{ goods.name }}</div>
-        <div class="goods-title">{{ goods.desc }}</div>
+				<div class="goods-title"><span>自营</span>{{ goods.name }}</div>
+        <div class="goods-desc">{{ goods.desc }}</div>
 				<div class="goods-price">￥{{goods.price}}</div>
 			</van-cell>
 			<van-cell class="goods-express">
@@ -30,6 +30,7 @@
 		</van-cell-group>
 
 		<van-cell-group class="goods-cell-group">
+      <van-cell title="商品详情" class="good_detail"/>
       <img v-for="img in goods.imgDetailList" :key="img.uri" :src="img.url">
 		</van-cell-group>
 
@@ -200,8 +201,24 @@ import {Toast} from 'vant'
 			}
 		}
 		&-title {
-			font-size: 16px;
+      width: 7rem;
+      span{
+        display: inline-block;
+        width: 0.6rem;
+        height: 0.4rem;
+        line-height: 0.4rem;
+        margin-right: 0.1rem;
+        color: #fff;
+        font-size: 12px;
+        background-color: #f44;
+        text-align: center;
+        border-radius: 3px;
+      }
 		}
+    &-desc {
+      font-size: 12px;
+      color: #f44;
+    }
 		&-price {
 			color: #f44;
 		}
@@ -212,6 +229,10 @@ import {Toast} from 'vant'
 		}
 		&-cell-group {
 			margin: 15px 0;
+      font-size: 0;
+      .good_detail{
+        color: #f44;
+      }
 			.van-cell__value {
 				color: #999;
 			}

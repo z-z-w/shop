@@ -26,8 +26,8 @@
           </router-link>
         </van-col>
         <van-col span="6">
-          <van-icon name="logistics"/>
           <router-link :to="{name:'/orderList',params: {active: 2}}">
+          <van-icon name="logistics"/>
             待收货
           </router-link>
         </van-col>

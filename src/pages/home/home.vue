@@ -15,10 +15,19 @@
       </div>
       <van-swipe :autoplay="3000">
         <van-swipe-item>
-          <img src="@/assets/images/banner1.jpg"/>
+          <img src="@/assets/images/banner3.jpg"/>
         </van-swipe-item>
         <van-swipe-item>
           <img src="@/assets/images/banner2.jpg"/>
+        </van-swipe-item>
+        <van-swipe-item>
+          <img src="@/assets/images/banner4.jpg"/>
+        </van-swipe-item>
+        <van-swipe-item>
+          <img src="@/assets/images/banner1.jpg"/>
+        </van-swipe-item>
+        <van-swipe-item>
+          <img src="@/assets/images/banner5.jpg"/>
         </van-swipe-item>
       </van-swipe>
     </div>

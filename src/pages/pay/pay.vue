@@ -173,6 +173,7 @@ export default {
 
     // 保存联系人
     async onSave(info) {
+      console.log(info);
       this.showEdit = false;
       this.showList = false;
       info.address = `${info.province}${info.city}${info.county} ${info.address_detail}`
@@ -219,12 +220,10 @@ export default {
     	if(this.chosenContactId == null){
     		Toast('请添加收货地址');
     	}else{
-        let status = 0
     		Dialog.confirm({
           title: '确认支付',
-          message: '是否支付¥' + this.totalPrice
+          message: '是否支付¥' + (this.totalPrice/100).toFixed(2)
         }).then(async () => {
-          status = 1  //已支付
           let index = this.list.findIndex(item => {
             return item.id === this.chosenContactId
           })
@@ -237,7 +236,9 @@ export default {
             goods: this.goods,
             address: this.list[index],
             payStatus: this.payResult,
-            orderStatus: status
+            orderStatus: 1,
+            totalPrice: this.totalPrice,
+            orderId: +new Date()
           })
           if(res.data.status === 0) {
             setTimeout(() => {
